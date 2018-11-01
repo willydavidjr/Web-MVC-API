@@ -27,6 +27,20 @@ namespace WebAPI1.Controllers.Api
             return Ok(new Person() { ID = 1, Name = "Attribute name called for Get." });
         }
 
+
+        /*
+            This will set the Accept to custom, if the Accept is application/json+full
+            Unlike with CSVFormatters, this is specific by API call method 
+        */ 
+        [Route("dawei")]
+        [HttpGet]
+        public IHttpActionResult GetDaWei()
+        {
+            return Ok(Request.Headers.Accept.Any(h => h.MediaType.EndsWith("+full"))
+                ? new Person(1, "GetDaWei is full.")
+                : new Person(1, "Get DaWei is simple."));
+        }
+
         //Adding a word foo will call: http://localhost:58681/api/custom/foo
         [Route("foo")]
         [HttpDelete]
